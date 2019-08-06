@@ -33,6 +33,19 @@ public class PersonService {
 
 		return personResponses;
 	}
+	
+	public List<PersonResponse> findPersonName(String personName) {
+
+		List<Person> persons =  personRepository.findAllPersonNames(personName);
+
+		List<PersonResponse> personResponses = new ArrayList<PersonResponse>();
+
+		for (Person person : persons) {
+			personResponses.add(mapPersons(person));
+		}
+
+		return personResponses;
+	}
 
 	private PersonResponse mapPersons(Person person) {
 		PersonResponse personResponse = new PersonResponse();
@@ -55,6 +68,8 @@ public class PersonService {
 
 		return petResponse;
 	}
+	
+	
 	
 	
 

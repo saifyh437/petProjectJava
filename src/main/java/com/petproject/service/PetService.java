@@ -33,6 +33,19 @@ public class PetService {
 
 		return petResponses;
 	}
+	
+	public List<PetResponse> findPetName(String petName) {
+
+		List<Pet> pets = (List<Pet>) petProjectRepository.findPetNames(petName);
+
+		List<PetResponse> petResponses = new ArrayList<PetResponse>();
+
+		for (Pet pet : pets) {
+			petResponses.add(mapPets(pet));
+		}
+
+		return petResponses;
+	}
 
 	private PetResponse mapPets(Pet pet) {
 		PetResponse petResponse = new PetResponse();

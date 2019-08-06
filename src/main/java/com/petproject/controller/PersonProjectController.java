@@ -5,12 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.petproject.request.PersonRequest;
@@ -29,7 +28,7 @@ public class PersonProjectController {
 		this.personService = personService;
 	}
 	
-	@GetMapping("/personproject")
+	@GetMapping("/personproject/all")
 	public List<PersonResponse> getAllPersons()
 	{
 		List<PersonResponse> allPersons = (List<PersonResponse>) personService.findAllPersons();
@@ -38,12 +37,21 @@ public class PersonProjectController {
 		
 	}
 	
+	@GetMapping("/personproject")
+	public List<PersonResponse> getPersonName(@RequestParam(required = true) String personName)
+	{
+		List<PersonResponse> allPersons = (List<PersonResponse>) personService.findPersonName(personName);
+
+		return allPersons;
+		
+	}
+	
 	@PostMapping("/personproject")
-	public ResponseEntity<PersonResponse> createPerson(@RequestBody @Valid PersonRequest personRequest)
+	public PersonResponse createPerson(@RequestBody @Valid PersonRequest personRequest)
 	{
 		PersonResponse personResponse = personService.createPerson(personRequest);
 		
-		return new ResponseEntity<>(personResponse,HttpStatus.CREATED);
+		return personResponse;
 	}
 	
 }
